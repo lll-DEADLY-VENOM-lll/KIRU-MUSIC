@@ -17,9 +17,9 @@ from pytgcalls.types.input_stream.quality import HighQualityAudio, MediumQuality
 from pytgcalls.types.stream import StreamAudioEnded
 
 import config
-from Spy import LOGGER, YouTube, app
-from Spy.misc import db
-from Spy.utils.database import (
+from kiru import LOGGER, YouTube, app
+from kiru.misc import db
+from kiru.utils.database import (
     add_active_chat,
     add_active_video_chat,
     get_lang,
@@ -31,11 +31,11 @@ from Spy.utils.database import (
     remove_active_video_chat,
     set_loop,
 )
-from Spy.utils.exceptions import AssistantErr
-from Spy.utils.formatters import check_duration, seconds_to_min, speed_converter
-from Spy.utils.inline.play import stream_markup
-from Spy.utils.stream.autoclear import auto_clean
-from Spy.utils.thumbnails import get_thumb
+from kiru.utils.exceptions import AssistantErr
+from kiru.utils.formatters import check_duration, seconds_to_min, speed_converter
+from kiru.utils.inline.play import stream_markup
+from kiru.utils.stream.autoclear import auto_clean
+from kiru.utils.thumbnails import get_thumb
 from strings import get_string
 
 autoend = {}
@@ -598,4 +598,4 @@ class Call(PyTgCalls):
             await self.change_stream(client, update.chat_id)
 
 
-Sagar = Call()
+Anony = Call()
