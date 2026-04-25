@@ -8,8 +8,8 @@ from typing import Union, Optional, Tuple, List
 from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch, Playlist
-from NEOMUSIC.utils.formatters import time_to_seconds
-from NEOMUSIC import LOGGER
+from kiru.utils.formatters import time_to_seconds
+from kiru import LOGGER
 
 # --- CONFIGURATION ---
 try:
