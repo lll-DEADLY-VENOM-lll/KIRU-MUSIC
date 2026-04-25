@@ -1,30 +1,32 @@
-# 1. Python 3.10 use karein (Aapke error mein yahi version dikh raha hai)
 FROM python:3.10-slim-buster
 
-# 2. Update aur Basic Dependencies install karein
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# 1. System Dependencies install karein
+RUN apt-get update -y && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
     curl \
     git \
     gnupg \
     ffmpeg \
     build-essential \
+    python3-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# 3. Node.js 20 (LTS) ko manually install karein (Taki 'node' command mil sake)
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm@latest
+# 2. Node.js 20 (LTS) install karein (Official Method)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
 
-# 4. Working directory set karein
+# 3. Path Fix (Yeh sabse zaroori hai)
+# Agar node install ho gaya hai phir bhi nahi mil raha, toh yeh command usse fix kar degi
+RUN ln -sf /usr/bin/node /usr/local/bin/node && \
+    ln -sf /usr/bin/npm /usr/local/bin/npm
+
+# 4. App directory setup
 WORKDIR /app
-
-# 5. Pehle requirements copy karke install karein (Cache optimization)
-COPY requirements.txt .
-RUN pip3 install --no-cache-dir -U -r requirements.txt
-
-# 6. Baaki saara code copy karein
 COPY . .
 
-# 7. Start command
+# 5. Python packages install karein
+RUN pip3 install --no-cache-dir -U -r requirements.txt
+
+# 6. Start command
 CMD ["bash", "start"]
