@@ -1,5 +1,5 @@
 from pyrogram import types
-from kiru import config
+import config # Changed from 'from kiru import config'
 
 class HelpPanel:
     def __init__(self):
@@ -14,7 +14,7 @@ class HelpPanel:
             cbs = ["admins", "auth", "blist", "lang", "ping", "play", "queue", "stats", "sudo"]
             buttons = [self.ikb(text=_lang[f"help_{cb}"], callback_data=f"help {cb}") for cb in cbs]
             rows = [buttons[i : i + 3] for i in range(0, len(buttons), 3)]
-            # Owner button niche add kiya gaya hai
+            # Owner button
             rows.append([self.ikb(text="ᴏᴡɴᴇʀ", url=f"tg://user?id={config.OWNER_ID}")])
             
         return self.ikm(rows)
