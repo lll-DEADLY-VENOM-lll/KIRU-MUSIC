@@ -11,6 +11,7 @@ class HelpPanel:
             rows = [[self.ikb(text=_lang["back"], callback_data="help back"), 
                      self.ikb(text=_lang["close"], callback_data="help close")]]
         else:
+            # Ye buttons aapke strings ke hisaab se hone chahiye
             cbs = ["admins", "auth", "blist", "lang", "ping", "play", "queue", "stats", "sudo"]
             buttons = [self.ikb(text=_lang[f"help_{cb}"], callback_data=f"help {cb}") for cb in cbs]
             rows = [buttons[i : i + 3] for i in range(0, len(buttons), 3)]
@@ -26,14 +27,17 @@ class HelpPanel:
         ]]
         return self.ikm(rows)
 
-# Instance create karein
-help_pannel = HelpPanel()
+# --- SAHI EXPORTS (Yeh lines fix karengi error) ---
 
-# Yeh exports zaroori hain
-help_markup = help_pannel.help_markup
-help_back_markup = help_pannel.help_back_markup
+# Pehle instance banayein
+_hp = HelpPanel()
 
-# --- YE LINES ADD KI GAYI HAIN ERROR FIX KARNE KE LIYE ---
+# Plugin line 29 (help_pannel(_, True)) ke liye ise function banana zaroori hai
+help_pannel = _hp.help_markup
+
+# Baaki functions
+help_back_markup = _hp.help_back_markup
+
 def private_help_panel(_):
     buttons = [
         [
