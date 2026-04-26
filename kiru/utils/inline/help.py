@@ -1,58 +1,117 @@
-from pyrogram import types
-import config 
+from typing import Union
 
-class HelpPanel:
-    def __init__(self):
-        self.ikm = types.InlineKeyboardMarkup
-        self.ikb = types.InlineKeyboardButton
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-    def help_markup(self, _lang: dict, back: bool = False) -> types.InlineKeyboardMarkup:
-        # Language keys missing hone par default text set kiya gaya hai
-        back_text = _lang.get("back", "ʙᴀᴄᴋ")
-        close_text = _lang.get("close", "ᴄʟᴏsᴇ")
-        
-        if back:
-            # Jab koi specific help menu ke andar ho tab 'Back' button dikhane ke liye
-            rows = [[self.ikb(text=back_text, callback_data="settings_back_helper"), 
-                     self.ikb(text=close_text, callback_data="close")]]
-        else:
-            # Main Help Menu: Yahan saari categories dikhengi
-            cbs = ["admins", "auth", "blist", "lang", "ping", "play", "queue", "stats", "sudo"]
-            buttons = []
-            for cb in cbs:
-                text = _lang.get(f"help_{cb}", cb.capitalize())
-                buttons.append(self.ikb(text=text, callback_data=f"help_callback hb{cbs.index(cb) + 1}"))
-            
-            # Buttons ko 3 columns mein divide karne ke liye
-            rows = [buttons[i : i + 3] for i in range(0, len(buttons), 3)]
-            # Owner button niche add karein
-            rows.append([self.ikb(text="ᴏᴡɴᴇʀ", url=f"tg://user?id={config.OWNER_ID}")])
-            
-        return self.ikm(rows)
+from kiru import app
 
-    def help_back_markup(self, _lang: dict) -> types.InlineKeyboardMarkup:
-        back_text = _lang.get("back", "ʙᴀᴄᴋ")
-        close_text = _lang.get("close", "ᴄʟᴏsᴇ")
-        rows = [[
-            self.ikb(text=back_text, callback_data="settings_back_helper"), 
-            self.ikb(text=close_text, callback_data="close")
-        ]]
-        return self.ikm(rows)
 
-# --- Sahi Exports taaki plugin crash na ho ---
-_hp = HelpPanel()
+def help_pannel(_, START: Union[bool, int] = None):
+    first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data=f"close")]
+    second = [
+        InlineKeyboardButton(
+            text=_["BACK_BUTTON"],
+            callback_data=f"settingsback_helper",
+        ),
+    ]
+    mark = second if START else first
+    upl = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text=_["H_B_1"],
+                    callback_data="help_callback hb1",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_2"],
+                    callback_data="help_callback hb2",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_3"],
+                    callback_data="help_callback hb3",
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    text=_["H_B_4"],
+                    callback_data="help_callback hb4",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_5"],
+                    callback_data="help_callback hb5",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_6"],
+                    callback_data="help_callback hb6",
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    text=_["H_B_7"],
+                    callback_data="help_callback hb7",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_8"],
+                    callback_data="help_callback hb8",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_9"],
+                    callback_data="help_callback hb9",
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    text=_["H_B_10"],
+                    callback_data="help_callback hb10",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_11"],
+                    callback_data="help_callback hb11",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_12"],
+                    callback_data="help_callback hb12",
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    text=_["H_B_13"],
+                    callback_data="help_callback hb13",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_14"],
+                    callback_data="help_callback hb14",
+                ),
+                InlineKeyboardButton(
+                    text=_["H_B_15"],
+                    callback_data="help_callback hb15",
+                ),
+            ],
+            mark,
+        ]
+    )
+    return upl
 
-# Yeh 'help_pannel' ab ek function ki tarah kaam karega (Fixes: TypeError: object is not callable)
-help_pannel = _hp.help_markup
-help_back_markup = _hp.help_back_markup
+
+def help_back_markup(_):
+    upl = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text=_["BACK_BUTTON"],
+                    callback_data=f"settings_back_helper",
+                ),
+            ]
+        ]
+    )
+    return upl
+
 
 def private_help_panel(_):
-    # Groups mein jab /help likhte hain tab yeh button dikhta hai
     buttons = [
         [
-            types.InlineKeyboardButton(
-                text="Hᴇʟᴘ",
-                url=f"https://t.me/{config.BOT_USERNAME}?start=help",
+            InlineKeyboardButton(
+                text=_["S_B_4"],
+                url=f"https://t.me/{app.username}?start=help",
             ),
         ],
     ]
