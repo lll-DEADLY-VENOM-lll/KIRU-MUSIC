@@ -3,33 +3,35 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from kiru import app
 
 def help_pannel(_, START: Union[bool, int] = None):
-    # Back/Close button logic
-    first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")]
+    # Back aur Close button logic
+    first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data=f"close")]
     second = [
         InlineKeyboardButton(
             text=_["BACK_BUTTON"],
-            callback_data="settingsback_helper",
+            callback_data=f"settingsback_helper",
         ),
     ]
     mark = second if START else first
-
-    # 4x4 Grid Layout (4 buttons ek row mein)
+    
+    # 15 Buttons ka 3x5 Grid layout
     upl = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(text=_["H_B_1"], callback_data="help_callback hb1"),
                 InlineKeyboardButton(text=_["H_B_2"], callback_data="help_callback hb2"),
                 InlineKeyboardButton(text=_["H_B_3"], callback_data="help_callback hb3"),
-                InlineKeyboardButton(text=_["H_B_4"], callback_data="help_callback hb4"),
             ],
             [
+                InlineKeyboardButton(text=_["H_B_4"], callback_data="help_callback hb4"),
                 InlineKeyboardButton(text=_["H_B_5"], callback_data="help_callback hb5"),
                 InlineKeyboardButton(text=_["H_B_6"], callback_data="help_callback hb6"),
-                InlineKeyboardButton(text=_["H_B_7"], callback_data="help_callback hb7"),
-                InlineKeyboardButton(text=_["H_B_8"], callback_data="help_callback hb8"),
             ],
             [
+                InlineKeyboardButton(text=_["H_B_7"], callback_data="help_callback hb7"),
+                InlineKeyboardButton(text=_["H_B_8"], callback_data="help_callback hb8"),
                 InlineKeyboardButton(text=_["H_B_9"], callback_data="help_callback hb9"),
+            ],
+            [
                 InlineKeyboardButton(text=_["H_B_10"], callback_data="help_callback hb10"),
                 InlineKeyboardButton(text=_["H_B_11"], callback_data="help_callback hb11"),
                 InlineKeyboardButton(text=_["H_B_12"], callback_data="help_callback hb12"),
@@ -38,21 +40,29 @@ def help_pannel(_, START: Union[bool, int] = None):
                 InlineKeyboardButton(text=_["H_B_13"], callback_data="help_callback hb13"),
                 InlineKeyboardButton(text=_["H_B_14"], callback_data="help_callback hb14"),
                 InlineKeyboardButton(text=_["H_B_15"], callback_data="help_callback hb15"),
-                # Agar 16wa button hai toh yahan add karein, warna khali chod dein
-                InlineKeyboardButton(text="Home", callback_data="help_callback hb15"), 
             ],
-            mark, # Close ya Back button (Full width)
+            mark, # Back ya Close button row
         ]
     )
     return upl
 
+
 def help_back_markup(_):
-    return InlineKeyboardMarkup(
-        [[InlineKeyboardButton(text=_["BACK_BUTTON"], callback_data="settingsback_helper")]]
+    upl = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text=_["BACK_BUTTON"],
+                    callback_data=f"settingsback_helper", # Callback name match hona chahiye help_pannel se
+                ),
+            ]
+        ]
     )
+    return upl
+
 
 def private_help_panel(_):
-    # Isko full-width button rakha hai taaki click karne mein aasani ho
+    # Isko InlineKeyboardMarkup mein convert kiya hai taaki buttons sahi dikhein
     return InlineKeyboardMarkup(
         [
             [
@@ -62,4 +72,4 @@ def private_help_panel(_):
                 ),
             ],
         ]
-                )
+    )
