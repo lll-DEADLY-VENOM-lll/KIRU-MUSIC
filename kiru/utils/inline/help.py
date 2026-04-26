@@ -1,5 +1,5 @@
 from pyrogram import types
-import config # Ya 'from kiru import config' agar aapka setup waisa hai
+import config 
 
 class HelpPanel:
     def __init__(self):
@@ -19,7 +19,6 @@ class HelpPanel:
             
         return self.ikm(rows)
 
-    # Naya function jo plugin mang raha hai
     def help_back_markup(self, _lang: dict) -> types.InlineKeyboardMarkup:
         rows = [[
             self.ikb(text=_lang["back"], callback_data="help back"), 
@@ -30,6 +29,18 @@ class HelpPanel:
 # Instance create karein
 help_pannel = HelpPanel()
 
-# Yeh lines zaroori hain taaki direct import kaam karein
+# Yeh exports zaroori hain
 help_markup = help_pannel.help_markup
 help_back_markup = help_pannel.help_back_markup
+
+# --- YE LINES ADD KI GAYI HAIN ERROR FIX KARNE KE LIYE ---
+def private_help_panel(_):
+    buttons = [
+        [
+            types.InlineKeyboardButton(
+                text="Hᴇʟᴘ",
+                callback_data="settings_back_helper",
+            ),
+        ],
+    ]
+    return buttons
